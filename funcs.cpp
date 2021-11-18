@@ -30,5 +30,49 @@ string parse_parameter(string p, string a){ //for singular parameters
             }
             counter++;
         }
+    } else if(a == "scoreboard" || a == "Scoreboard"){
+        for(char c: p){
+            if(counter > 11){
+                param += c;
+            }
+            counter++;
+        }
     }
+
+    return param;
+}
+
+int numCounter = 0;
+int parse_num_vote(string p){ //param inckudes num votes and user id
+    string ret = "";
+    for(char c: p){
+        if(numCounter > 5){
+            if(isdigit(c) == true){
+                ret += c;
+            }
+            if(c == " "){ //should break at first whitespace encountered after vote, which seperates num of votes and user id
+                break;
+            }
+        }
+
+        numCounter++;
+    }
+    int r = 0;
+    r = stoi(ret);
+
+    return r;
+
+}
+
+string parse_vote_user(string p){
+    int counter = 0;
+    string ret = "";
+
+    for(char c: p){
+        if(counter > numCounter){
+            ret += c;
+        }
+    }
+
+    return ret;
 }

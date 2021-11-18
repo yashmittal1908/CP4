@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
     string action;
 
     string parse_action(string a);
-    string parse_parameter(string p, string a); //p is for parameter, a is the action
+    string parse_parameter(string p,string a); //p is for parameter, a is the action
 
     //menu
     cout << "What would you like to do?" << endl;
@@ -20,7 +20,8 @@ int main(int argc, char *argv[]){
 
     action = parse_action(choice); //will retrieve action user wants to perform
     if(action == "Register" || "register"){
-        //
+        string userid = parse_parameter(choice, action);
+        // call a fucntion to add to the tree
     }
 
 }
