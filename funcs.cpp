@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string.h>
+#include <sstream>
 
 using namespace std;
 
@@ -8,7 +9,7 @@ string parse_action(string a){
     string action = "";
 
     for(char c: a){
-        if(c == " "){ //change to all whitespace eventually
+        if(isspace(c)){ //change to all whitespace eventually
             break;
         }
         action += c;
@@ -24,7 +25,7 @@ string parse_parameter(string p, string a){ //for singular parameters
 
     if(a == "register" || a == "Register"){ // 8 letter long, white space 9th character
         for(char c: p){
-            if(counter > 9){
+            if(counter > 8){
                 
                 param += c;
             }
@@ -50,15 +51,16 @@ int parse_num_vote(string p){ //param inckudes num votes and user id
             if(isdigit(c) == true){
                 ret += c;
             }
-            if(c == " "){ //should break at first whitespace encountered after vote, which seperates num of votes and user id
+            if(isspace(c)){ //should break at first whitespace encountered after vote, which seperates num of votes and user id
                 break;
             }
         }
 
         numCounter++;
     }
+    stringstream convert(ret);
     int r = 0;
-    r = stoi(ret);
+    convert >> r;
 
     return r;
 

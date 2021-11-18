@@ -10,11 +10,25 @@ class User{
             vote_count += num_votes;
         }
 
+        User(){};
+        User(string ui){
+            user_id = ui;
+        }
+        User(const User &u){
+            user_id = u.user_id;
+            vote_count = u.vote_count;
+            left_user = new User;
+            right_user = new User;
+            *left_user = *(u.left_user);
+            *right_user = *(u.right_user);
+        }
+
     private:
-        string user_id;
+        string user_id = "initial value";
         int  vote_count = 0;
 
-        User * left_user; //left child
-        User * right_user; //right child
-        
+        User * left_user = NULL; //left child
+        User * right_user = NULL; //right child
+
+    friend class UserTree;     
 };
