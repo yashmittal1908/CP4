@@ -4,9 +4,10 @@
 
 class UserTree{
     private:
-        User *root = NULL;
+        User *root = nullptr;
 
     public:
        void addUserNode(string ui);
        void printTree();
+       void addToSubTree(User *use, string u);
 };  
