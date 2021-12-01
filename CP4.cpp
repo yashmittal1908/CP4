@@ -18,21 +18,21 @@ int main(int argc, char *argv[]){
     string parse_parameter(string p,string a); //p is for parameter, a is the action
 
     //menu
-    cout << "What would you like to do?" << endl;
-    cout << "1. Register <userid>" << endl;
-
-    getline(cin, choice);
-
-    action = parse_action(choice); //will retrieve action user wants to perform
-    if(action == "Register" || "register"){
-        string userid = parse_parameter(choice, action);
-        cout << "user Id = " << userid << endl;
-        // call a fucntion to add to the tree
-
-        // search before adding
-
+    do{
+        cout << "What would you like to do?" << endl;
+        cout << "1. Register <userid>" << endl;
+    
+        getline(cin, choice);
+    
+        action = parse_action(choice); //will retrieve action user wants to perform
+        if(action == "Register" || "register"){
+            string userid = parse_parameter(choice, action);
+            cout << "user Id = " << userid << endl;
+            //User * boo = new User(userid);
+            // search before adding
+    
             T.addUserNode(userid);
             T.printTree();
-    }
-
+        }
+    }while(choice != "Exit");
 }
