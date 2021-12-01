@@ -25,10 +25,10 @@ class User{
 
     private:
         string user_id = "initial value";
-        int  vote_count = 0;
+        int vote_count = 0;
 
-        User * left_user = NULL; //left child
-        User * right_user = NULL; //right child
+        User * left_user = nullptr; //left child
+        User * right_user = nullptr; //right child
 
     friend class UserTree;     
 };
