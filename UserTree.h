@@ -10,4 +10,6 @@ class UserTree{
        void addUserNode(string ui);
        void printTree();
        void addToSubTree(User *use, string u);
+       bool UniqueUserSearch(string ui);
+       bool SearchSubTree(User *use, string ui);
 };  
