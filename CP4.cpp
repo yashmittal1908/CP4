@@ -28,11 +28,17 @@ int main(int argc, char *argv[]){
         if(action == "Register" || "register"){
             string userid = parse_parameter(choice, action);
             cout << "user Id = " << userid << endl;
-            //User * boo = new User(userid);
             // search before adding
-    
-            T.addUserNode(userid);
-            T.printTree();
+            bool b = T.UniqueUserSearch(userid);
+            cout << "bool: " << b << endl;
+            if(T.UniqueUserSearch(userid) == true){
+                cout << "This username is already taken! Please try again!" << endl;
+            }
+            else{
+                cout << "new node added" << endl;
+                T.addUserNode(userid);
+                T.printTree();
+            }
         }
     }while(choice != "Exit");
 }
