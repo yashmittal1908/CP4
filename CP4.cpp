@@ -13,19 +13,24 @@ int main(int argc, char *argv[]){
     string choice;
     string action;
     UserTree T;
+    
 
     string parse_action(string a);
     string parse_parameter(string p,string a); //p is for parameter, a is the action
+    int parse_num_vote(string p);
+    string parse_vote_user(string p);
 
     //menu
     do{
         cout << "What would you like to do?" << endl;
         cout << "1. Register <userid>" << endl;
+        cout << "2. Vote <numofvotes> <userid>" << endl;
     
         getline(cin, choice);
     
         action = parse_action(choice); //will retrieve action user wants to perform
-        if(action == "Register" || "register"){
+        cout << action << endl;
+        if(action == "Register" || action == "register"){
             string userid = parse_parameter(choice, action);
             cout << "user Id = " << userid << endl;
             // search before adding
@@ -38,6 +43,22 @@ int main(int argc, char *argv[]){
                 cout << "new node added" << endl;
                 T.addUserNode(userid);
                 T.printTree();
+            }
+        }
+        else if(action == "Vote" || action == "vote"){
+            cout << "calling vote" << endl;
+            int numofvotes = parse_num_vote(choice);
+            string voteuser = parse_vote_user(choice);
+            cout << numofvotes << endl;
+            cout << voteuser << endl;
+            
+            if(T.UniqueUserSearch(voteuser) == true){
+                //update usser's vote count
+                T.updateUserVotes(numofvotes, voteuser);
+                cout << "updated votes" << endl;
+            }
+            else{
+                cout << "This user doesn't exist!" << endl;
             }
         }
     }while(choice != "Exit");
