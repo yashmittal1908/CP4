@@ -12,4 +12,5 @@ class UserTree{
        void addToSubTree(User *use, string u);
        bool UniqueUserSearch(string ui);
        bool SearchSubTree(User *use, string ui);
+       void updateUserVotes(int numvotes, string ui);
 };  
