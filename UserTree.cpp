@@ -145,3 +145,34 @@ bool UserTree::SearchSubTree(User *use, string ui){//use is current node, ui is 
         }
     }
 }
+
+void UserTree::updateUserVotes(int numvotes, string ui){
+    if (root == nullptr){
+        cout << "No tree" << endl;
+    }
+    if(root->user_id == ui){
+        cout << "root" << endl;
+        root->vote_count += numvotes;
+        cout << root->user_id << " vote count is " << root->vote_count << endl;
+    }
+    // Key is greater than, ui);
+   /* else if(root->user_id < ui){
+        if(root->right_user == nullptr){
+            return false;
+        }
+        else{
+            cout << "calling right sub" << endl;
+            return SearchSubTree(root->right_user, ui);
+        }
+    }
+    // Key is smaller than root's key
+    else{
+        if(root->left_user == nullptr){
+            return false;
+        }
+        else{
+            cout << "calling left sub" << endl;
+            return SearchSubTree(root->left_user, ui);
+        }
+    }*/
+}
