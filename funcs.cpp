@@ -47,7 +47,7 @@ int numCounter = 0;
 int parse_num_vote(string p){ //param inckudes num votes and user id
     string ret = "";
     for(char c: p){
-        if(numCounter > 5){
+        if(numCounter > 4){
             if(isdigit(c) == true){
                 ret += c;
             }
@@ -55,10 +55,9 @@ int parse_num_vote(string p){ //param inckudes num votes and user id
                 break;
             }
         }
-
         numCounter++;
     }
-    stringstream convert(ret);
+    stringstream convert(ret); //converts votes from string to int
     int r = 0;
     convert >> r;
 
@@ -74,7 +73,9 @@ string parse_vote_user(string p){
         if(counter > numCounter){
             ret += c;
         }
+        counter++;
     }
-
+    
+    numCounter = 0;
     return ret;
 }
