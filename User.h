@@ -1,6 +1,10 @@
+#ifndef __USER_H_
+#define __USER_H_
+
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
+#include "VoteNode.h"
 
 using namespace std;
 
@@ -30,5 +34,10 @@ class User{
         User * left_user = nullptr; //left child
         User * right_user = nullptr; //right child
 
-    friend class UserTree;     
+        VoteNode * votepointer = nullptr;
+
+    friend class UserTree;
+    friend class VoteNode;     
 };
+
+#endif

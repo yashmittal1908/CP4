@@ -33,14 +33,6 @@ void UserTree::addUserNode(string u){
                 addToSubTree(root->right_user, u);
             }
         } //comp strimngs as long as cases same
-        /*
-        char arr1[root->user_id.length()];
-        char arr2[userid.length()];
-        for(char c: root->userid){
-            
-        }
-        User temp = User(userid);
-        */
     }
 }
 

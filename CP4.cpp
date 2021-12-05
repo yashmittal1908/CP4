@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include "UserTree.h"
+#include "VoteTree.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ int main(int argc, char *argv[]){
     string choice;
     string action;
     UserTree T;
+    VoteTree V;
     
 
     string parse_action(string a);
@@ -43,6 +45,8 @@ int main(int argc, char *argv[]){
                 cout << "new node added" << endl;
                 T.addUserNode(userid);
                 T.printTree();
+                V.addVoteNode(userid);
+                //V.printTree();
             }
         }
         else if(action == "Vote" || action == "vote"){

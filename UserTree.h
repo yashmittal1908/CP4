@@ -4,7 +4,7 @@
 
 class UserTree{
     private:
-        User *root = nullptr;
+        User * root = nullptr;
 
     public:
        void addUserNode(string ui);
