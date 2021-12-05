@@ -132,7 +132,7 @@ bool UserTree::SearchSubTree(User *use, string ui){//use is current node, ui is 
             return false;
         }
         else{
-            SearchSubTree(use->left_user, ui);
+            return SearchSubTree(use->left_user, ui);
         }
     }
     else{//greater than curent node value
@@ -141,7 +141,7 @@ bool UserTree::SearchSubTree(User *use, string ui){//use is current node, ui is 
             return false;
         }
         else{
-            SearchSubTree(use->right_user, ui);
+            return SearchSubTree(use->right_user, ui);
         }
     }
 }
