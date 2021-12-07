@@ -18,4 +18,6 @@ class VoteTree{
        int search(string use);
        void updateVotes(int numvotes, string ui);
        void print();
+    //    void heapSort(vector<VoteNode*> H, int n);
+    //    void heapify(vector<VoteNode*> H, int n, int i);
 };  

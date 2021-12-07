@@ -24,25 +24,27 @@ int main(int argc, char *argv[]){
 
     //menu
     do{
+        cout<<endl;
         cout << "What would you like to do?" << endl;
         cout << "1. Register <userid>" << endl;
         cout << "2. Vote <numofvotes> <userid>" << endl;
+        cout<<endl;
     
         getline(cin, choice);
     
         action = parse_action(choice); //will retrieve action user wants to perform
-        cout << action << endl;
+        // cout << action << endl;
         if(action == "Register" || action == "register"){
             string userid = parse_parameter(choice, action);
-            cout << "user Id = " << userid << endl;
+            // cout << "user Id = " << userid << endl;
             // search before adding
-            bool b = T.UniqueUserSearch(userid);
-            cout << "bool: " << b << endl;
+            // bool b = T.UniqueUserSearch(userid);
+            // cout << "bool: " << b << endl;
             if(T.UniqueUserSearch(userid) == true){
                 cout << "This username is already taken! Please try again!" << endl;
             }
             else{
-                cout << "new node added" << endl;
+                cout << "New Node Added!" << endl;
                 T.addUserNode(userid);
                 T.printTree();
                 V.addVoteNode(userid);
@@ -50,20 +52,20 @@ int main(int argc, char *argv[]){
             }
         }
         else if(action == "Vote" || action == "vote"){
-            cout << "calling vote" << endl;
+            // cout << "calling vote" << endl;
             int numofvotes = parse_num_vote(choice);
             string voteuser = parse_vote_user(choice);
-            cout << numofvotes << endl;
-            cout << voteuser << endl;
+            // cout << numofvotes << endl;
+            // cout << voteuser << endl;
             
             if(T.UniqueUserSearch(voteuser) == true){
-                //update usser's vote count
-                V.print();
-                T.updateUserVotes(numofvotes, voteuser);
+                //update user's vote count
+                cout<< "Before Votes Updated "<<endl; V.print();
+                // T.updateUserVotes(numofvotes, voteuser);
                 V.updateVotes(numofvotes, voteuser);
 
-                cout << "updated votes" << endl;
-                V.print();
+                // cout << "updated votes" << endl;
+                cout<< "After Votes Updated "<<endl; V.print();
             }
             else{
                 cout << "This user doesn't exist!" << endl;

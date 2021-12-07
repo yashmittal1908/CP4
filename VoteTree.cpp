@@ -5,14 +5,14 @@
 
 void VoteTree::addVoteNode(string v){
     if(H.size() == 0){
-        cout<< H.size()<<endl;
+        cout<<"Size of VoteTree: " <<H.size()<<endl;
         VoteNode* rootNode = new VoteNode(v);
         H.push_back(rootNode);
-        cout << H.at(0)->id << endl;
+        cout << "Node added to VoteTree with ID: " << H.at(0)->id << endl;
     }
     else{
             H.push_back(new VoteNode(v));
-            cout << H.back()->id << endl;
+            cout <<"Node added to VoteTree with ID: "<< H.back()->id << endl;
         }    
     }
 
@@ -48,7 +48,7 @@ void VoteTree::addVoteNode(string v){
 
 void VoteTree::updateVotes(int numvotes, string ui){
     if (H.size() == 0){
-        cout << "No tree" << endl;
+        cout << "Tree doesn't exist, votes can not be added!" << endl;
     }
     else if(H.at(0)->id == ui){
         cout << "root" << endl;
@@ -57,12 +57,14 @@ void VoteTree::updateVotes(int numvotes, string ui){
     }
     else{
         int s = search(ui);
+        cout<< "Search Result: "<<s;
         if( s != -1){
-            cout << "Before:" << H.at(s)->votes << endl;
+            cout<< endl;
+            cout << "Before Votes:" << H.at(s)->votes << endl;
             H.at(s)-> votes += numvotes;
-            cout << "After:" << H.at(s)->votes << endl;
+            cout << "After Votes:" << H.at(s)->votes << endl;
             reheapify(s);
-            cout<<" Reheapified" << endl;
+            
         }
 
     
@@ -91,12 +93,70 @@ void VoteTree::reheapify(int index){
             H.at(index) =  temp;
             delete temp;
         }
+
+        cout<<" Reheapified" << endl;
+        // index = (index-1)/2;
+        // reheapify(index);
     }
+    
     
 }
 
 void VoteTree::print(){
     for(int i=0;i<H.size();i++){
-        cout<<H.at(i)->votes<< " ";
+        cout<<"Votes " << H.at(i)->votes<< " ID: " << H.at(i)->id<<endl;
     }
 }
+
+
+// void VoteTree::heapSort(vector<VoteNode*> H, int n)
+// {
+//     // Build heap (rearrange array)
+//     for (int i = n / 2 - 1; i >= 0; i--)
+//         heapify(H, n, i);
+ 
+//     // One by one extract an element from heap
+//     for (int i = n - 1; i > 0; i--) {
+//         // Move current root to end
+//         // swap(H.at(0), H.at(i));
+//         cout<<"swapping 1"<<endl;
+//         VoteNode* temp = new VoteNode;
+//         temp = H.at(i);
+//         H.at(i) = H.at(0);
+//         H.at(0) =  temp;
+//         // delete temp;
+ 
+//         // call max heapify on the reduced heap
+//         heapify(H, i, 0);
+//     }
+//     cout<<" Reheapified" << endl;
+// }
+
+// void VoteTree::heapify(vector<VoteNode*> H, int n, int i)
+// {
+//     int largest = i; // Initialize largest as root
+//     int l = 2 * i + 1; // left = 2*i + 1
+//     int r = 2 * i + 2; // right = 2*i + 2
+ 
+//     // If left child is larger than root
+//     if (l < n && H.at(l)->votes > H.at(largest)->votes)
+//         largest = l;
+ 
+//     // If right child is larger than largest so far
+//     if (r < n && H.at(r)->votes > H.at(largest)->votes)
+//         largest = r;
+ 
+//     // If largest is not root
+//     if (largest != i) {
+//         // swap(H.at(i), H.at(largest));
+//         cout<<"swapping 2"<<endl;
+//         VoteNode* temp = new VoteNode;
+//         temp = H.at(largest);
+//         H.at(largest) = H.at(i);
+//         H.at(i) =  temp;
+//         // delete temp;
+ 
+//         // Recursively heapify the affected sub-tree
+//         heapify(H, n, largest);
+//     }
+// }
