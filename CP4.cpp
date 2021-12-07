@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
                 T.addUserNode(userid);
                 T.printTree();
                 V.addVoteNode(userid);
-                //V.printTree();
+                // V.printTree();
             }
         }
         else if(action == "Vote" || action == "vote"){
@@ -58,12 +58,16 @@ int main(int argc, char *argv[]){
             
             if(T.UniqueUserSearch(voteuser) == true){
                 //update usser's vote count
+                V.print();
                 T.updateUserVotes(numofvotes, voteuser);
+                V.updateVotes(numofvotes, voteuser);
+
                 cout << "updated votes" << endl;
+                V.print();
             }
             else{
                 cout << "This user doesn't exist!" << endl;
             }
-        }
+        } 
     }while(choice != "Exit");
 }
