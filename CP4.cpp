@@ -46,7 +46,6 @@ int main(int argc, char *argv[]){
             else{
                 cout << "New Node Added!" << endl;
                 T.addUserNode(userid);
-                T.printTree();
                 V.addVoteNode(userid);
                 // V.printTree();
             }
@@ -60,12 +59,12 @@ int main(int argc, char *argv[]){
             
             if(T.UniqueUserSearch(voteuser) == true){
                 //update user's vote count
-                cout<< "Before Votes Updated "<<endl; V.print();
-                // T.updateUserVotes(numofvotes, voteuser);
+                cout<< "Before Votes Updated "<<endl; 
+                T.updateUserVotes(numofvotes, voteuser);
                 V.updateVotes(numofvotes, voteuser);
 
                 // cout << "updated votes" << endl;
-                cout<< "After Votes Updated "<<endl; V.print();
+                cout<< "After Votes Updated "<<endl;
             }
             else{
                 cout << "This user doesn't exist!" << endl;

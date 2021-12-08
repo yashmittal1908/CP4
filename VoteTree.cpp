@@ -47,27 +47,30 @@ void VoteTree::addVoteNode(string v){
 // }
 
 void VoteTree::updateVotes(int numvotes, string ui){
-    if (H.size() == 0){
-        cout << "Tree doesn't exist, votes can not be added!" << endl;
-    }
-    else if(H.at(0)->id == ui){
-        cout << "root" << endl;
-        H.at(0)->votes += numvotes;
-        cout << H.at(0)->id << " vote count is " << H.at(0)->votes << endl;
+    if(numvotes < 1){
+        cout << "Thats' an invalid number of votes!" << endl;
     }
     else{
-        int s = search(ui);
-        cout<< "Search Result: "<<s;
-        if( s != -1){
-            cout<< endl;
-            cout << "Before Votes:" << H.at(s)->votes << endl;
-            H.at(s)-> votes += numvotes;
-            cout << "After Votes:" << H.at(s)->votes << endl;
-            reheapify(s);
-            
+        if (H.size() == 0){
+            cout << "Tree doesn't exist, votes can not be added!" << endl;
         }
-
-    
+        else if(H.at(0)->id == ui){
+            cout << "root" << endl;
+            H.at(0)->votes += numvotes;
+            cout << H.at(0)->id << " vote count is " << H.at(0)->votes << endl;
+        }
+        else{
+            int s = search(ui);
+            cout<< "Search Result: "<<s;
+            if( s != -1){
+                cout<< endl;
+                // cout << "Before Votes:" << H.at(s)->votes << endl;
+                H.at(s)-> votes += numvotes;
+                // cout << "After Votes:" << H.at(s)->votes << endl;
+                reheapify(s);
+                
+            }
+        }
     }
 }
 
@@ -87,16 +90,18 @@ void VoteTree::reheapify(int index){
     else{ 
         if(H.at(index)->votes > H.at((index-1)/2)->votes){
         //swap
-            VoteNode* temp = new VoteNode;
-            temp = H.at((index-1)/2);
-            H.at((index-1)/2) = H.at(index);
-            H.at(index) =  temp;
-            delete temp;
+            // VoteNode* temp = new VoteNode;
+            // temp = H.at((index-1)/2);
+            // H.at((index-1)/2) = H.at(index);
+            // H.at(index) =  temp;
+            // delete temp;
+
+            swap( H.at(index), H.at((index-1)/2));
         }
 
         cout<<" Reheapified" << endl;
-        // index = (index-1)/2;
-        // reheapify(index);
+        index = (index-1)/2;
+        reheapify(index);
     }
     
     

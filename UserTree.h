@@ -8,9 +8,10 @@ class UserTree{
 
     public:
        void addUserNode(string ui);
-       void printTree();
+       void printTree(User* use);
        void addToSubTree(User *use, string u);
        bool UniqueUserSearch(string ui);
        bool SearchSubTree(User *use, string ui);
        void updateUserVotes(int numvotes, string ui);
+       void updateSubTreeVotes(User * use, string ui, int numvotes);
 };  

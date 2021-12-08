@@ -36,25 +36,14 @@ void UserTree::addUserNode(string u){
     }
 }
 
-void UserTree::printTree(){
-    cout << "For root node in UserTree:  userId = " << root->user_id << " vote count = " << root->vote_count << endl;
-    if(root->left_user != nullptr){
-        cout << "lc: " << root->left_user->user_id << endl;
-        if(root->left_user->left_user != nullptr){
-            cout << "llc: " << root->left_user->left_user->user_id << endl;
-        }
-        if(root->left_user->right_user != nullptr){
-            cout << "lrc: " << root->left_user->right_user->user_id << endl;
-        }
+void UserTree::printTree(User * use){
+    cout << "made it" << endl;
+    cout << "ID: " << use->user_id << "Votes: " << use->vote_count;
+    if(use->left_user != nullptr){
+        printTree(use->left_user);
     }
-    if(root->right_user != nullptr){
-        cout << "rc: " << root->right_user->user_id << endl;
-        if(root->right_user->left_user != nullptr){
-            cout << "rlc: " << root->right_user->left_user->user_id << endl;
-        }
-        if(root->right_user->right_user != nullptr){
-            cout << "rrc: " << root->right_user->right_user->user_id << endl;
-        }
+    if(use->right_user != nullptr){
+        printTree(use->right_user);
     }
 }
 
@@ -138,6 +127,7 @@ bool UserTree::SearchSubTree(User *use, string ui){//use is current node, ui is 
 }
 
 void UserTree::updateUserVotes(int numvotes, string ui){
+    printTree(root);
     if (root == nullptr){
         cout << "No tree" << endl;
     }
@@ -147,24 +137,36 @@ void UserTree::updateUserVotes(int numvotes, string ui){
         // cout << root->user_id << " vote count is " << root->vote_count << endl;
     }
     // Key is greater than, ui);
-   /* else if(root->user_id < ui){
+    else if(root->user_id < ui){
         if(root->right_user == nullptr){
-            return false;
+       
         }
         else{
             cout << "calling right sub" << endl;
-            return SearchSubTree(root->right_user, ui);
+            updateSubTreeVotes(root->right_user, ui, numvotes);
         }
     }
     // Key is smaller than root's key
     else{
         if(root->left_user == nullptr){
-            return false;
+           
         }
         else{
             cout << "calling left sub" << endl;
-            return SearchSubTree(root->left_user, ui);
+            updateSubTreeVotes(root->left_user, ui, numvotes);
         }
-    }*/
+    }
+    printTree(root);
 }
 
+void UserTree::updateSubTreeVotes(User * use, string ui, int numvotes){
+    if(use->user_id == ui){
+        use->vote_count += numvotes;
+    }
+    else if(ui > use->user_id){
+        updateSubTreeVotes(use->right_user, ui, numvotes);
+    }
+    else{
+        updateSubTreeVotes(use->left_user, ui, numvotes);
+    }
+}
