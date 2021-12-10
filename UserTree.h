@@ -23,6 +23,10 @@ class UserTree{
            return root;
        }
 
+       void initialiseUser(User * init){
+           root = init;
+       }
+
 
        User* deleteNode(User* current, string key);
        User* minValueNode(User* node);

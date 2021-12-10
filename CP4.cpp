@@ -74,7 +74,7 @@ int main(int argc, char *argv[]){
                     profit += numofvotes/2;
                     cout<<"MoneyPool = "<<moneyPool;
                 }
-                if(moneyPool>=flight_cost){
+                while(moneyPool>=flight_cost && V.getSize()>0){
                     cout<<"Delete is called"<<endl;
                     // get user_id from VoteTree
                     string launchUserID = V.deleteRoot();
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
                     temp = T.deleteNode(T.returnRoot(),launchUserID);
                    
                     // T.inorder(T.returnRoot());
-                    delete temp;
+                    T.initialiseUser(temp);
                     cout<<"From VoteTree:"<<endl;
                     V.print();
                     cout<<endl;
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
                     T.inorder(T.returnRoot());
                     cout<<endl;
 
-                    moneyPool=0;
+                    moneyPool -= flight_cost;
                 }
 
                 // cout << "updated votes" << endl;
@@ -102,15 +102,15 @@ int main(int argc, char *argv[]){
             }
         } 
         else if(action == "Scoreboard" || action == "scoreboard"){
-            // int k = stoi(parse_parameter(choice,action));
-            // if(k==0){
-            //     cout<<"No Tree Exists Yet"<<endl;
-            // } if (k<1){
-            //     cout<<"Top of negative numver not possible!"<<endl;
-            // } else {
-            //     V.scoreboard(k);
+            int k = stoi(parse_parameter(choice,action));
+            if(k==0){
+                cout<<"No Tree Exists Yet"<<endl;
+            } if (k<1){
+                cout<<"Top of negative numver not possible!"<<endl;
+            } else {
+                V.scoreboard(k);
         
-            // }
+            }
             // User* temp = new User;
             // temp = T.deleteNode(T.returnRoot(),"l");
             // T.inorder(T.returnRoot());

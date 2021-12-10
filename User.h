@@ -27,7 +27,7 @@ class User{
             *right_user = *(u.right_user);
         }
 
-    private:
+    // private:
         string user_id = "initial value";
         int vote_count = 0;
 

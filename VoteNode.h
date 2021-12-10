@@ -17,18 +17,11 @@ class VoteNode{
         VoteNode(const VoteNode &vn){
             id = vn.id;
             votes = vn.votes;
-            left = new VoteNode;
-            right = new VoteNode;
-            *left = *(vn.left);
-            *right = *(vn.right);
         }
 
     private:
         string id = "initial";
         int votes = 0;
-        User * user_tree_address = nullptr;
-        VoteNode * left = nullptr;
-        VoteNode * right = nullptr;;
 
         
     friend class VoteTree;

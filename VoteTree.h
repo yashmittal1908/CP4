@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include "VoteNode.h"
+#include "User.h"
 
 using namespace std;
 
 class VoteTree{
     private:
         // VoteNode * root = nullptr;
-        vector<VoteNode*> H;
+        vector<User*> H;
 
     public:
-       void addVoteNode(string v);
+       void addVoteNode(string v,int i=0);
        void printTree();
        void reheapify(int index);
        //bool UniqueUserSearch(string ui);
@@ -24,4 +24,8 @@ class VoteTree{
 
         void heapify(int i);
         string deleteRoot();
+
+        int getSize(){
+            return H.size();
+        }
 };  
