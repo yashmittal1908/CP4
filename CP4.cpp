@@ -8,13 +8,13 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-    stringstream convert(argv[0]);
-    int flight_cost = 0;
-    convert >> flight_cost;
+    int flight_cost = atoi(argv[1]);
     string choice;
     string action;
     UserTree T;
     VoteTree V;
+    int profit = 0;
+    int moneyPool = 0;
     
 
     string parse_action(string a);
@@ -28,6 +28,7 @@ int main(int argc, char *argv[]){
         cout << "What would you like to do?" << endl;
         cout << "1. Register <userid>" << endl;
         cout << "2. Vote <numofvotes> <userid>" << endl;
+        cout << "3. Scoreboard <k>" << endl;
         cout<<endl;
     
         getline(cin, choice);
@@ -62,6 +63,36 @@ int main(int argc, char *argv[]){
                 cout<< "Before Votes Updated "<<endl; 
                 T.updateUserVotes(numofvotes, voteuser);
                 V.updateVotes(numofvotes, voteuser);
+                V.print();
+                if(numofvotes % 2 == 1){
+                    moneyPool += numofvotes/2;
+                    profit += numofvotes/2 + 1;
+                    cout<<"MoneyPool = "<<moneyPool;
+                }
+                else {
+                    moneyPool += numofvotes/2;
+                    profit += numofvotes/2;
+                    cout<<"MoneyPool = "<<moneyPool;
+                }
+                if(moneyPool>=flight_cost){
+                    cout<<"Delete is called"<<endl;
+                    // get user_id from VoteTree
+                    string launchUserID = V.deleteRoot();
+                    cout<<"Launch User Id: "<<launchUserID<<endl;
+                    User* temp = new User;
+                    temp = T.deleteNode(T.returnRoot(),launchUserID);
+                   
+                    // T.inorder(T.returnRoot());
+                    delete temp;
+                    cout<<"From VoteTree:"<<endl;
+                    V.print();
+                    cout<<endl;
+                    cout<<"From UserTree:"<<endl;
+                    T.inorder(T.returnRoot());
+                    cout<<endl;
+
+                    moneyPool=0;
+                }
 
                 // cout << "updated votes" << endl;
                 cout<< "After Votes Updated "<<endl;
@@ -70,5 +101,22 @@ int main(int argc, char *argv[]){
                 cout << "This user doesn't exist!" << endl;
             }
         } 
+        else if(action == "Scoreboard" || action == "scoreboard"){
+            // int k = stoi(parse_parameter(choice,action));
+            // if(k==0){
+            //     cout<<"No Tree Exists Yet"<<endl;
+            // } if (k<1){
+            //     cout<<"Top of negative numver not possible!"<<endl;
+            // } else {
+            //     V.scoreboard(k);
+        
+            // }
+            // User* temp = new User;
+            // temp = T.deleteNode(T.returnRoot(),"l");
+            // T.inorder(T.returnRoot());
+        
+            // delete temp;
+          
+        }
     }while(choice != "Exit");
 }

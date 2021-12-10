@@ -170,3 +170,110 @@ void UserTree::updateSubTreeVotes(User * use, string ui, int numvotes){
         updateSubTreeVotes(use->left_user, ui, numvotes);
     }
 }
+
+// void UserTree::launch(string ui){
+//     //if node is root
+//     if(root->user_id == ui){
+//         if(root->left_user == nullptr && root->right_user == nullptr){
+//             delete root;
+//             cout << "Launched " << ui << "1" << endl;
+//     }
+//     //user name is less than roots
+//     else if(root->user_id > ui){
+//         root->left_user = removeUser(root, ui);
+//     }
+//     //if id is greater than roots id
+//     else{
+//         root->right_user = removeUser(root, ui);
+//     }
+// }
+// User* UserTree::removeUser(User *use, string ui){
+//     if(use->user_id == ui){
+//         //leaf case
+//         if(use->left_user == nullptr && use->right_user == nullptr){
+//             delete use;
+//         }
+//         //one child, left child
+//         if(use->left_user != nullptr && use->right_user == nullptr){
+//             //delete use;
+//             use = use->left_user;
+//         }
+//     }
+// }
+
+
+User* UserTree::deleteNode(User* root, string key)
+{
+    // base case
+    if (root == nullptr){
+        return root;
+         cout<<"deleted root"<<endl;
+    }
+    // If the key to be deleted is
+    // smaller than the root's
+    // key, then it lies in left subtree
+    if (key < root->user_id)
+        root->left_user = deleteNode(root->left_user, key);
+ 
+    // If the key to be deleted is
+    // greater than the root's
+    // key, then it lies in right subtree
+    else if (key > root->user_id)
+        root->right_user = deleteNode(root->right_user, key);
+ 
+    // if key is same as root's key, then This is the node
+    // to be deleted
+    else {
+        // node has no child
+        if (root->left_user==nullptr and root->right_user==nullptr)
+            return nullptr;
+       
+        // node with only one child or no child
+        else if (root->left_user == nullptr) {
+            User* temp = new User;
+            temp = root->right_user;
+            delete root;
+            return temp;
+        }
+        else if (root->right_user == nullptr) {
+            User* temp = new User;
+            temp = root->left_user;
+            delete root;
+            return temp;
+        }
+ 
+        // node with two children: Get the inorder successor
+        // (smallest in the right subtree)
+        User* temp = minValueNode(root->right_user);
+ 
+        // Copy the inorder successor's content to this node
+        root->user_id = temp->user_id;
+ 
+        // Delete the inorder successor
+        root->right_user = deleteNode(root->right_user, temp->user_id);
+    }
+    cout<<"deleted"<<endl;
+    return root;
+    
+}
+
+User* UserTree::minValueNode(User* node)
+{
+    User* root = new User;
+    root = node;
+ 
+    /* loop down to find the leftmost leaf */
+    while (root && root->left_user != nullptr)
+        root = root->left_user;
+ 
+    return root;
+}
+
+void UserTree::inorder(User* root)
+{
+    if (root != NULL) {
+        inorder(root->left_user);
+        cout << root->user_id;
+        inorder(root->right_user);
+    }
+}

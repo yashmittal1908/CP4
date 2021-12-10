@@ -165,3 +165,55 @@ void VoteTree::print(){
 //         heapify(H, n, largest);
 //     }
 // }
+
+void VoteTree::scoreboard(int k){
+    for(int i=0;i<k;i++){
+
+    }
+}
+
+
+void VoteTree::heapify(int i)
+{
+    int largest = i; // Initialize largest as root
+    int l = 2 * i + 1; // left = 2*i + 1
+    int r = 2 * i + 2; // right = 2*i + 2
+ 
+    // If left child is larger than root
+    if (l < H.size() && H.at(l)->votes > H.at(largest)->votes)
+        largest = l;
+ 
+    // If right child is larger than largest so far
+    if (r < H.size() && H.at(r)->votes > H.at(largest)->votes)
+        largest = r;
+ 
+    // If largest is not root
+    if (largest != i) {
+        swap(H.at(i), H.at(largest));
+ 
+        // Recursively heapify the affected sub-tree
+        heapify(largest);
+    }
+}
+ 
+// Function to delete the root from Heap
+string VoteTree::deleteRoot()
+{
+    // // Get the last element
+    // VoteNode* lastElement = H.at(H.size()-1);
+ 
+    // // Replace root with last element
+    // H.at(0) = lastElement;
+
+    string launchUserId = H.at(0)->id;
+    
+    swap(H.at(0), H.at(H.size()-1));
+    // Decrease size of heap by 1
+    H.resize(H.size()-1);
+
+ 
+    // heapify the root node
+    heapify(0);
+
+    return launchUserId;
+}

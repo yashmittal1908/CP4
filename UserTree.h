@@ -14,4 +14,16 @@ class UserTree{
        bool SearchSubTree(User *use, string ui);
        void updateUserVotes(int numvotes, string ui);
        void updateSubTreeVotes(User * use, string ui, int numvotes);
+       void launch(string ui);
+       void removeUser(User * use, string ui);
+
+       void inorder(User* root);
+
+       User* returnRoot(){
+           return root;
+       }
+
+
+       User* deleteNode(User* current, string key);
+       User* minValueNode(User* node);
 };  

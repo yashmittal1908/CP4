@@ -33,12 +33,12 @@ string parse_parameter(string p, string a){ //for singular parameters
         }
     } else if(a == "scoreboard" || a == "Scoreboard"){
         for(char c: p){
-            if(counter > 11){
+            if(counter > 10){
                 param += c;
             }
             counter++;
         }
-    }
+    } 
 
     return param;
 }
