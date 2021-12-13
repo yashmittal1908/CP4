@@ -19,9 +19,11 @@ class VoteNode{
             votes = vn.votes;
         }
 
+        
     private:
         string id = "initial";
         int votes = 0;
+    
 
         
     friend class VoteTree;

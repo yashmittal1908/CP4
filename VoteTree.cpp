@@ -2,17 +2,21 @@
 #include <iostream>
 #include "VoteTree.h"
 
+string final = " ";
 
+void updateVotepointer(){
+
+}
 void VoteTree::addVoteNode(string v, int i){
     if(H.size() == 0){
         cout<<"Size of VoteTree: " <<H.size()<<endl;
-        User* rootNode = new User(v);
+        User* rootNode = new User(v,i,H.size());
         H.push_back(rootNode);
-        cout << "Node added to VoteTree with ID: " << H.at(0)->user_id << endl;
+        cout << "Node added to VoteTree with ID: " << H.at(0)->user_id << " index: "<< H.size()-1<< endl;
     }
     else{
-            H.push_back(new User(v));
-            cout <<"Node added to VoteTree with ID: "<< H.back()->user_id << endl;
+            H.push_back(new User(v,i,H.size()));
+            cout <<"Node added to VoteTree  else with ID: "<< H.back()->user_id<< " index: "<< H.size()-1<< endl;
         }    
     }
 
@@ -46,7 +50,7 @@ void VoteTree::addVoteNode(string v, int i){
 //     }
 // }
 
-void VoteTree::updateVotes(int numvotes, string ui){
+void VoteTree::updateVotes(int numvotes, string ui,UserTree T){
     if(numvotes < 1){
         cout << "Thats' an invalid number of votes!" << endl;
     }
@@ -60,49 +64,99 @@ void VoteTree::updateVotes(int numvotes, string ui){
             cout << H.at(0)->user_id << " vote count is " << H.at(0)->vote_count << endl;
         }
         else{
-            int s = search(ui);
+            int s = search(ui,T);
+            print();
             cout<< "Search Result: "<<s;
             if( s != -1){
                 cout<< endl;
                 // cout << "Before Votes:" << H.at(s)->vote_count << endl;
                 H.at(s)-> vote_count += numvotes;
                 // cout << "After Votes:" << H.at(s)->vote_count << endl;
-                reheapify(s);
+             
+     
+
+                reheapify(s,T);
+                if (final == " "){
+                    final = H.at(s)->user_id;
+                }
+                    cout<<"Final:"<<final<<endl;
+
+                if(ui!=final){
+                    cout<<"UI from swap: "<<ui<<endl;
+                    cout<<"Final from swap: "<<final<<endl;
+                    cout<<"B :"<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
+                    cout<<"A :"<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
                 
+         
+                cout<<"Before"<<endl;
+                cout<<"UI:      "<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
+                cout<<"Final:    "<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
+
+                //to update index value of VoteTree nodes inside VoteTree
+                swap(T.returnSearchedAddress(ui)->votepointer->indexVal,T.returnSearchedAddress(final)->votepointer->indexVal);
+
+                // to update votepointer inside UserTree
+                    
+                    // swap(T.returnSearchedAddress(ui)->votepointer,T.returnSearchedAddress(final)->votepointer);
+                 cout<<"After"<<endl;
+                cout<<"UI:      "<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
+                cout<<"Final:    "<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
+                final = " ";
+                }
             }
         }
     }
 }
 
-int VoteTree::search(string use){
-    for(int i = 0; i < H.size(); i++){
-        if(H.at(i)->user_id == use){
-            return i;
-        }
-    }
-    return -1;
+int VoteTree::search(string use,UserTree T){
+    
+   
+        // User* temp = T.returnSearchedAddress(use);
+        // cout<<"address from votepointer from search"<<&(T.returnSearchedAddress(use)->votepointer)<<endl;
+        // cout<<"address of a"<<H.at(0)<<endl;
+        // cout<<"address of b"<<H.at(1)<<endl;
+        // cout<<"H at 0 adress"<<&H[0]<<endl;
+
+        // // int temp = *(T.returnSearchedAddress(use)->votepointer);
+        // // User* temp2 = H.at(0);
+
+        int index = T.returnSearchedAddress(use)->votepointer->indexVal;
+        cout<<"User Id from search:"<< T.returnSearchedAddress(use)->votepointer->user_id;
+        // int temp = (T.returnSearchedAddress(use)->votepointer) - H.data();
+      
+        return index;
+        
+  
 }
 
-void VoteTree::reheapify(int index){
+
+
+void VoteTree::reheapify(int index,UserTree T){
+
     if(H.at(0)->user_id == H.at(index)->user_id){
         cout<< "nothing happens on reheapify" << endl;
     }
     else{ 
         if(H.at(index)->vote_count > H.at((index-1)/2)->vote_count){
-        //swap
-            // User* temp = new User;
-            // temp = H.at((index-1)/2);
-            // H.at((index-1)/2) = H.at(index);
-            // H.at(index) =  temp;
-            // delete temp;
+            final = H.at((index-1)/2)->user_id;
+
+            cout<<"Enter reheapufy loop"<<endl;
 
             swap( H.at(index), H.at((index-1)/2));
+            string node1_id = H.at(index)->user_id;
+            string node2_id = H.at((index-1)/2)->user_id;
 
+            // swap(T.returnSearchedAddress(node1_id)->votepointer,T.returnSearchedAddress(node2_id)->votepointer);
+            T.inorder(T.root);     
+           
+        } else{
+            final = H.at(index)->user_id;
         }
 
         cout<<" Reheapified" << endl;
+        // cout<<"Final:"<<final<<endl;
         index = (index-1)/2;
-        reheapify(index);
+        reheapify(index,T);
     }
     
     
@@ -115,88 +169,50 @@ void VoteTree::print(){
 }
 
 
-// void VoteTree::heapSort(vector<User*> H, int n)
-// {
-//     // Build heap (rearrange array)
-//     for (int i = n / 2 - 1; i >= 0; i--)
-//         heapify(H, n, i);
- 
-//     // One by one extract an element from heap
-//     for (int i = n - 1; i > 0; i--) {
-//         // Move current root to end
-//         // swap(H.at(0), H.at(i));
-//         cout<<"swapping 1"<<endl;
-//         User* temp = new User;
-//         temp = H.at(i);
-//         H.at(i) = H.at(0);
-//         H.at(0) =  temp;
-//         // delete temp;
- 
-//         // call max heapify on the reduced heap
-//         heapify(H, i, 0);
-//     }
-//     cout<<" Reheapified" << endl;
-// }
-
-// void VoteTree::heapify(vector<User*> H, int n, int i)
-// {
-//     int largest = i; // Initialize largest as root
-//     int l = 2 * i + 1; // left = 2*i + 1
-//     int r = 2 * i + 2; // right = 2*i + 2
- 
-//     // If left child is larger than root
-//     if (l < n && H.at(l)->vote_count > H.at(largest)->vote_count)
-//         largest = l;
- 
-//     // If right child is larger than largest so far
-//     if (r < n && H.at(r)->vote_count > H.at(largest)->vote_count)
-//         largest = r;
- 
-//     // If largest is not root
-//     if (largest != i) {
-//         // swap(H.at(i), H.at(largest));
-//         cout<<"swapping 2"<<endl;
-//         User* temp = new User;
-//         temp = H.at(largest);
-//         H.at(largest) = H.at(i);
-//         H.at(i) =  temp;
-//         // delete temp;
- 
-//         // Recursively heapify the affected sub-tree
-//         heapify(H, n, largest);
-//     }
-// }
-
-void VoteTree::scoreboard(int k){
+void VoteTree::scoreboard(int k,UserTree T){
     vector<User*> temp;
-
+    if(k>H.size()){
+        cout<<"Enter valid k value"<<endl;
+    } else {
     cout<<"Scoreboard:"<<endl;
-    for(int i=0;i<k;i++){
-        User* temp2 = H.at(0);
+    if(H.size()==0){
+        cout<<"No users registered!"<<endl;
+    } else if(H.size()==1){
+        cout<<H.at(0)->user_id<<" "<<H.at(0)->vote_count<<endl;
+    } else {
+        for(int i=0;i<k;i++){
+            User* temp2 = H.at(0);
+    
 
 
-        cout<<temp2->user_id<<" "<<temp2->vote_count<<endl;
-        cout<<"1"<<endl;
-        temp.push_back(H.at(0));
-        cout<<"2"<<endl;
-        H.erase(H.begin());
-        cout<<"3"<<endl;
-        // if(H.at(1)>H.at(2)){
-        //     heapify(1);
-        // } else {
-        //     heapify(2);
-        // }
+            cout<<temp2->user_id<<" "<<temp2->vote_count<<endl;
+            // cout<<"1"<<endl;
+            temp.push_back(H.at(0));
+            // cout<<"2"<<endl;
+            H.erase(H.begin());
+            // cout<<"3"<<endl;
+            if(H.size()!=0){
+                  heapify(0,T);
+            }
+          
+            // if(H.at(0)>H.at(2)){
+            //     heapify(1);
+            // } else {
+            //     heapify(2);
+            // }
+        }
     }
 
     for(int i=0;i<k;i++){
         
-        addVoteNode(temp.at(i)->user_id);
-        updateVotes(H.at(i)->vote_count,H.at(i)->user_id);
+        addVoteNode(temp.at(i)->user_id,temp.at(i)->vote_count);
+        heapify(0,T);
+    }
     }
 }
 
 
-void VoteTree::heapify(int i)
+void VoteTree::heapify(int i,UserTree T)
 {
     int largest = i; // Initialize largest as root
     int l = 2 * i + 1; // left = 2*i + 1
@@ -211,32 +227,33 @@ void VoteTree::heapify(int i)
         largest = r;
  
     // If largest is not root
+
+
     if (largest != i) {
+        //swapd the indexVal, indexVal is the value of the index of VoteTree node stored in BST
+        swap(H.at(i)->indexVal,H.at(largest)->indexVal);
         swap(H.at(i), H.at(largest));
+        string node1_id = H.at(i)->user_id;
+        string node2_id = H.at(largest)->user_id;
+        swap(T.returnSearchedAddress(node1_id)->votepointer,T.returnSearchedAddress(node2_id)->votepointer);
  
         // Recursively heapify the affected sub-tree
-        heapify(largest);
+        heapify(largest, T);
     }
 }
  
 // Function to delete the root from Heap
-string VoteTree::deleteRoot()
+string VoteTree::deleteRoot(UserTree T)
 {
-    // // Get the last element
-    // User* lastElement = H.at(H.size()-1);
- 
-    // // Replace root with last element
-    // H.at(0) = lastElement;
 
-    string launchUserId = H.at(0)->user_id;
-    
+    string launchUserId = H.at(0)->user_id; 
     swap(H.at(0), H.at(H.size()-1));
-    // Decrease size of heap by 1
     H.resize(H.size()-1);
 
  
     // heapify the root node
-    heapify(0);
+    heapify(0,T);
+    
 
     return launchUserId;
 }

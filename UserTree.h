@@ -2,14 +2,16 @@
 #include <iostream>
 #include "User.h"
 
+
+
 class UserTree{
-    private:
+
         User * root = nullptr;
 
     public:
-       void addUserNode(string ui);
+       void addUserNode(string ui,User* votepointer);
        void printTree(User* use);
-       void addToSubTree(User *use, string u);
+       void addToSubTree(User *use, string u,User* votepointer);
        bool UniqueUserSearch(string ui);
        bool SearchSubTree(User *use, string ui);
        void updateUserVotes(int numvotes, string ui);
@@ -17,8 +19,14 @@ class UserTree{
        void launch(string ui);
        void removeUser(User * use, string ui);
 
+
+       
+
        void inorder(User* root);
 
+
+        User* returnSearchedAddress(string ui);
+        User* returnSubSearchedAddress(User *use, string ui);
        User* returnRoot(){
            return root;
        }
@@ -30,4 +38,6 @@ class UserTree{
 
        User* deleteNode(User* current, string key);
        User* minValueNode(User* node);
+
+       friend class VoteTree;
 };  

@@ -2,13 +2,14 @@
 #include <iostream>
 #include "UserTree.h"
 
-void UserTree::addUserNode(string u){
+void UserTree::addUserNode(string u,User* voteP){
     //User temp = User(userid);
     //cout << "made it" << endl;
     if(this->root == nullptr){
         
         //cout << "made it" << endl;
         root = new User; //ask if this needs to be deleted later
+        root->votepointer = voteP;
         // cout << "Before" << root->user_id << endl;
         root->user_id = u;
         // cout <<"After: " << root->user_id << endl;
@@ -19,18 +20,18 @@ void UserTree::addUserNode(string u){
         //will users eever be ==
         if(u < root->user_id){
             if(root->left_user == nullptr){
-                root->left_user = new User(u); //delete ?this too
+                root->left_user = new User(u,voteP); //delete ?this too
             }
             else{
-                addToSubTree(root->left_user, u);
+                addToSubTree(root->left_user, u,voteP);
             }
         }
         else{
             if(root->right_user == nullptr){
-                root->right_user = new User(u); //delete ?this too
+                root->right_user = new User(u,voteP); //delete ?this too
             }
             else{
-                addToSubTree(root->right_user, u);
+                addToSubTree(root->right_user, u,voteP);
             }
         } //comp strimngs as long as cases same
     }
@@ -47,21 +48,21 @@ void UserTree::printTree(User * use){
     }
 }
 
-void UserTree::addToSubTree(User *use, string u){
+void UserTree::addToSubTree(User *use, string u,User* voteP){
     if(u < use->user_id){
         if(use->left_user == nullptr){
-            use->left_user = new User(u); //delete ?this too
+            use->left_user = new User(u,voteP); //delete ?this too
         }
         else{
-            addToSubTree(use->left_user, u);
+            addToSubTree(use->left_user, u,voteP);
         }
     }
     else{
         if(use->right_user == nullptr){
-            use->right_user = new User(u); //delete ?this too
+            use->right_user = new User(u,voteP); //delete ?this too
         }
         else{
-            addToSubTree(use->right_user, u);
+            addToSubTree(use->right_user, u,voteP);
         }
     }
 }
@@ -125,6 +126,67 @@ bool UserTree::SearchSubTree(User *use, string ui){//use is current node, ui is 
         }
     }
 }
+
+User* UserTree::returnSearchedAddress(string ui){
+    if (root == nullptr){
+        return nullptr;
+    }
+    if(root->user_id == ui){
+    
+        return root;
+    }
+    // Key is greater than r>left_user, ui);
+    if(root->user_id < ui){
+        if(root->right_user == nullptr){
+            return nullptr;
+        }
+        else{
+          
+            return returnSubSearchedAddress(root->right_user, ui);
+        }
+    }
+    // Key is smaller than root's key
+    else{
+        if(root->left_user == nullptr){
+            return nullptr;
+        }
+        else{
+          
+            return returnSubSearchedAddress(root->left_user, ui);
+        }
+    }
+}
+
+User* UserTree::returnSubSearchedAddress(User *use, string ui){
+    if(use->user_id == ui){
+  
+        return use;
+    }
+    //cehck current node to see if key is a match
+    else if(ui < use->user_id){
+
+        if(use->left_user == nullptr){
+            return nullptr;
+        }
+        else{
+            return returnSubSearchedAddress(use->left_user, ui);
+        }
+    }
+    else{//greater than curent node value
+
+        if(use->right_user == nullptr){
+            return nullptr;
+        }
+        else{
+            return returnSubSearchedAddress(use->right_user, ui);
+        }
+    }
+}
+
+
+
+
+
 
 void UserTree::updateUserVotes(int numvotes, string ui){
     printTree(root);
@@ -212,14 +274,18 @@ User* UserTree::deleteNode(User* root, string key)
     // If the key to be deleted is
     // smaller than the root's
     // key, then it lies in left subtree
-    if (key < root->user_id)
+    if (key < root->user_id){
+
         root->left_user = deleteNode(root->left_user, key);
+    }
  
     // If the key to be deleted is
     // greater than the root's
     // key, then it lies in right subtree
-    else if (key > root->user_id)
+    else if (key > root->user_id){
+   
         root->right_user = deleteNode(root->right_user, key);
+    }
  
     // if key is same as root's key, then This is the node
     // to be deleted
@@ -231,13 +297,17 @@ User* UserTree::deleteNode(User* root, string key)
         // node with only one child or no child
         else if (root->left_user == nullptr) {
             User* temp = new User;
+            
             temp = root->right_user;
+        
             delete root;
             return temp;
         }
         else if (root->right_user == nullptr) {
             User* temp = new User;
+               
             temp = root->left_user;
+         
             delete root;
             return temp;
         }
@@ -248,6 +318,7 @@ User* UserTree::deleteNode(User* root, string key)
  
         // Copy the inorder successor's content to this node
         root->user_id = temp->user_id;
+     
  
         // Delete the inorder successor
         root->right_user = deleteNode(root->right_user, temp->user_id);
@@ -271,9 +342,9 @@ User* UserTree::minValueNode(User* node)
 
 void UserTree::inorder(User* root)
 {
-    if (root != NULL) {
+    if (root != nullptr) {
         inorder(root->left_user);
-        cout << root->user_id;
+        cout <<"UserId from UserTree: " << root->user_id << "VoteTree Index: "<<root->votepointer->indexVal<<endl;
         inorder(root->right_user);
     }
 }

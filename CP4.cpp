@@ -2,7 +2,6 @@
 #include <string.h>
 #include <iostream>
 #include <sstream>
-#include "UserTree.h"
 #include "VoteTree.h"
 
 using namespace std;
@@ -46,8 +45,11 @@ int main(int argc, char *argv[]){
             }
             else{
                 cout << "New Node Added!" << endl;
-                T.addUserNode(userid);
-                V.addVoteNode(userid);
+                V.addVoteNode(userid,0);
+               
+                T.addUserNode(userid,V.returnAddress());
+                T.inorder(T.returnRoot());
+                
                 // V.printTree();
             }
         }
@@ -61,8 +63,15 @@ int main(int argc, char *argv[]){
             if(T.UniqueUserSearch(voteuser) == true){
                 //update user's vote count
                 cout<< "Before Votes Updated "<<endl; 
+                
+                cout<<"Before:"<<endl;
+                T.inorder(T.returnRoot());
+                cout<<endl;
+                V.updateVotes(numofvotes, voteuser,T);
                 T.updateUserVotes(numofvotes, voteuser);
-                V.updateVotes(numofvotes, voteuser);
+                cout<<"After:"<<endl;
+                cout<<endl;
+                T.inorder(T.returnRoot());
                 V.print();
                 if(numofvotes % 2 == 1){
                     moneyPool += numofvotes/2;
@@ -77,7 +86,7 @@ int main(int argc, char *argv[]){
                 while(moneyPool>=flight_cost && V.getSize()>0){
                     cout<<"Delete is called"<<endl;
                     // get user_id from VoteTree
-                    string launchUserID = V.deleteRoot();
+                    string launchUserID = V.deleteRoot(T);
                     cout<<"Launch User Id: "<<launchUserID<<endl;
                     User* temp = new User;
                     temp = T.deleteNode(T.returnRoot(),launchUserID);
@@ -108,7 +117,7 @@ int main(int argc, char *argv[]){
             } if (k<1){
                 cout<<"Top of negative numver not possible!"<<endl;
             } else {
-                V.scoreboard(k);
+                V.scoreboard(k,T);
         
             }
             // User* temp = new User;
