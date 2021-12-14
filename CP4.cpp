@@ -99,6 +99,7 @@ int main(int argc, char *argv[]){
                     cout<<"From UserTree:"<<endl;
                     T.inorder(T.returnRoot());
                     cout<<endl;
+                    V.print();
 
                     moneyPool -= flight_cost;
                 }
@@ -118,6 +119,7 @@ int main(int argc, char *argv[]){
                 cout<<"Top of negative numver not possible!"<<endl;
             } else {
                 V.scoreboard(k,T);
+                cout<<"AFTER SCOREBOPARD SIZE OF VOTE TREE"<<V.getSize()<<endl;
         
             }
             // User* temp = new User;

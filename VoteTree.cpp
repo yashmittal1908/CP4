@@ -76,33 +76,33 @@ void VoteTree::updateVotes(int numvotes, string ui,UserTree T){
      
 
                 reheapify(s,T);
-                if (final == " "){
-                    final = H.at(s)->user_id;
-                }
-                    cout<<"Final:"<<final<<endl;
+                // if (final == " "){
+                //     final = H.at(s)->user_id;
+                // }
+                //     cout<<"Final:"<<final<<endl;
 
-                if(ui!=final){
-                    cout<<"UI from swap: "<<ui<<endl;
-                    cout<<"Final from swap: "<<final<<endl;
-                    cout<<"B :"<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
-                    cout<<"A :"<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
+                // if(ui!=final){
+                //     cout<<"UI from swap: "<<ui<<endl;
+                //     cout<<"Final from swap: "<<final<<endl;
+                //     cout<<"B :"<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
+                //     cout<<"A :"<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
                 
          
-                cout<<"Before"<<endl;
-                cout<<"UI:      "<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
-                cout<<"Final:    "<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
+                // cout<<"Before"<<endl;
+                // cout<<"UI:      "<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
+                // cout<<"Final:    "<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
 
-                //to update index value of VoteTree nodes inside VoteTree
-                swap(T.returnSearchedAddress(ui)->votepointer->indexVal,T.returnSearchedAddress(final)->votepointer->indexVal);
+                // //to update index value of VoteTree nodes inside VoteTree
+                // swap(T.returnSearchedAddress(ui)->votepointer->indexVal,T.returnSearchedAddress(final)->votepointer->indexVal);
 
-                // to update votepointer inside UserTree
+                // // to update votepointer inside UserTree
                     
-                    // swap(T.returnSearchedAddress(ui)->votepointer,T.returnSearchedAddress(final)->votepointer);
-                 cout<<"After"<<endl;
-                cout<<"UI:      "<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
-                cout<<"Final:    "<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
-                final = " ";
-                }
+                //     // swap(T.returnSearchedAddress(ui)->votepointer,T.returnSearchedAddress(final)->votepointer);
+                //  cout<<"After"<<endl;
+                // cout<<"UI:      "<<T.returnSearchedAddress(ui)->votepointer->indexVal<<endl;
+                // cout<<"Final:    "<<T.returnSearchedAddress(final)->votepointer->indexVal<<endl;
+                // final = " ";
+                // }
             }
         }
     }
@@ -145,8 +145,9 @@ void VoteTree::reheapify(int index,UserTree T){
             swap( H.at(index), H.at((index-1)/2));
             string node1_id = H.at(index)->user_id;
             string node2_id = H.at((index-1)/2)->user_id;
+            // swap(T.returnSearchedAddress(ui)->votepointer->indexVal,T.returnSearchedAddress(final)->votepointer->indexVal);
 
-            // swap(T.returnSearchedAddress(node1_id)->votepointer,T.returnSearchedAddress(node2_id)->votepointer);
+            swap(T.returnSearchedAddress(node1_id)->votepointer->indexVal,T.returnSearchedAddress(node2_id)->votepointer->indexVal);
             T.inorder(T.root);     
            
         } else{
@@ -164,7 +165,7 @@ void VoteTree::reheapify(int index,UserTree T){
 
 void VoteTree::print(){
     for(int i=0;i<H.size();i++){
-        cout<<"Votes " << H.at(i)->vote_count<< " ID: " << H.at(i)->user_id<<endl;
+        cout<<"Votes " << H.at(i)->vote_count<< " ID: " << H.at(i)->user_id<<" INDEX: "<< H.at(i)->indexVal<<endl;
     }
 }
 
@@ -201,13 +202,22 @@ void VoteTree::scoreboard(int k,UserTree T){
             //     heapify(2);
             // }
         }
+        for(int i= 0;i<H.size();i++){
+            User* temp2 = H.at(0);
+             temp.push_back(H.at(0));
+              H.erase(H.begin());
+               if(H.size()!=0){
+                  heapify(0,T);
+            }
+          
+        }
+        
+        H.resize(temp.size());
+        H = temp;
+   
     }
 
-    for(int i=0;i<k;i++){
-        
-        addVoteNode(temp.at(i)->user_id,temp.at(i)->vote_count);
-        heapify(0,T);
-    }
+
     }
 }
 
@@ -235,7 +245,7 @@ void VoteTree::heapify(int i,UserTree T)
         swap(H.at(i), H.at(largest));
         string node1_id = H.at(i)->user_id;
         string node2_id = H.at(largest)->user_id;
-        swap(T.returnSearchedAddress(node1_id)->votepointer,T.returnSearchedAddress(node2_id)->votepointer);
+        // swap(T.returnSearchedAddress(node1_id)->votepointer->indexVal,T.returnSearchedAddress(node2_id)->votepointer->indexVal);
  
         // Recursively heapify the affected sub-tree
         heapify(largest, T);
@@ -247,10 +257,13 @@ string VoteTree::deleteRoot(UserTree T)
 {
 
     string launchUserId = H.at(0)->user_id; 
+    cout<<"BEFORE FROM DELETE ROOT:"<<H.at(0)->indexVal<<" "<<H.at(H.size()-1)->indexVal<<endl;
+    swap(H.at(0)->indexVal, H.at(H.size()-1)->indexVal);
+        cout<<" AFTER FROM DELETE ROOT:"<<H.at(0)->indexVal<<" "<<H.at(H.size()-1)->indexVal<<endl;
     swap(H.at(0), H.at(H.size()-1));
     H.resize(H.size()-1);
 
- 
+    
     // heapify the root node
     heapify(0,T);
     
