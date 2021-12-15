@@ -1,3 +1,0 @@
-/home/ymittal1/src/CS240/CP4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/ymittal1/src/CS240/CP4/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ymittal1/src/CS240/CP4/cmake-build-debug/CMakeFiles/CP4.dir
