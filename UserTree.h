@@ -1,43 +1,30 @@
-#include <stdio.h>
-#include <iostream>
+#include <string>
 #include "User.h"
 
+using std::string;
 
+class UserTree {
+    struct UserNode {
+        User* m_user = nullptr;
+        UserNode* m_left = nullptr;
+        UserNode* m_right = nullptr;
+        ~UserNode() {
+            delete m_left;
+            delete m_right;
+            delete m_user;
+        }
+    };
+    UserNode* m_root = nullptr;
 
-class UserTree{
+    User* insert(User* user, UserNode*& subtree);
+    User* find(const string& user_id, UserNode* subtree);
+    User* remove(User* user, UserNode*& subtree);
+public:
+    User* insert(User* user);
+    User* find(const string& user_id);
+    User* remove(User* user);
 
-        User * root = nullptr;
-
-    public:
-       void addUserNode(string ui,User* votepointer);
-       void printTree(User* use);
-       void addToSubTree(User *use, string u,User* votepointer);
-       bool UniqueUserSearch(string ui);
-       bool SearchSubTree(User *use, string ui);
-       void updateUserVotes(int numvotes, string ui);
-       void updateSubTreeVotes(User * use, string ui, int numvotes);
-       void launch(string ui);
-       void removeUser(User * use, string ui);
-
-
-       
-
-       void inorder(User* root);
-
-
-        User* returnSearchedAddress(string ui);
-        User* returnSubSearchedAddress(User *use, string ui);
-       User* returnRoot(){
-           return root;
-       }
-
-       void initialiseUser(User * init){
-           root = init;
-       }
-
-
-       User* deleteNode(User* current, string key);
-       User* minValueNode(User* node);
-
-       friend class VoteTree;
-};  
+    ~UserTree() {
+        delete m_root;
+    }
+};

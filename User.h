@@ -1,52 +1,20 @@
 #ifndef __USER_H_
 #define __USER_H_
 
-#include <stdio.h>
-#include <string.h>
-#include <iostream>
-#include "VoteNode.h"
+#include <string>
 
-using namespace std;
+using std::size_t;
+using std::string;
 
-class User{
-    public:
-        void update_votes(int num_votes){
-            vote_count += num_votes;
-        }
+struct User {
+    friend class UserTree;
 
-        User(){};
-        User(string ui){
-            user_id = ui;
-        }
-        User(string ui,int i,int index){
-            user_id = ui;
-            vote_count = i;
-            indexVal = index;
-        }
-        User(string ui,User* vote){
-            user_id = ui;
-            votepointer = vote;
-        }
-        User(const User &u){
-            user_id = u.user_id;
-            vote_count = u.vote_count;
-            left_user = new User;
-            right_user = new User;
-            *left_user = *(u.left_user);
-            *right_user = *(u.right_user);
-        }
-        
-    // private:
-        string user_id = "initial value";
-        int vote_count = 0;
-        int indexVal = -1;
+    string m_user_id;
+    size_t m_heap_index = -1;
+    size_t m_vote_count = 0;
 
-        User * left_user = nullptr; //left child
-        User * right_user = nullptr; //right child
-
-        User* votepointer = nullptr;
-
-    friend class UserTree;   
+    explicit User(const string& user_id): m_user_id(user_id) {
+    }
 };
 
 #endif
