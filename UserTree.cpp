@@ -35,8 +35,8 @@ User* UserTree::find(const string& user_id, UserTree::UserNode* subtree) {
         return subtree->m_user;
 }
 
-User* UserTree::remove(User* user) {
-    return remove(user, m_root);
+void UserTree::remove(User* user) {
+     remove(user, m_root);
 }
 
 User* UserTree::remove(User* user, UserTree::UserNode*& subtree) {
@@ -64,7 +64,7 @@ User* UserTree::remove(User* user, UserTree::UserNode*& subtree) {
         User* ret = next->m_user;
         delete next;
         return ret;
-    } else if (subtree->m_left) {
+    } else if (subtree->m_left != nullptr) {
         UserNode* to_delete = subtree;
         User* ret = to_delete->m_user;
         subtree = subtree->m_left;
@@ -79,6 +79,19 @@ User* UserTree::remove(User* user, UserTree::UserNode*& subtree) {
         delete to_delete;
         return ret;
     }
+}
+
+void UserTree::io(){
+    inorder(m_root);
+}
+void UserTree::inorder(UserNode * u){
+    if(u->m_left != nullptr){
+        inorder(u->m_left);
+    }
+    if(u->m_right != nullptr){
+        inorder(u->m_right);
+    }
+    std::cout << "id: " << u->m_user->m_user_id << std::endl;
 }
 
 

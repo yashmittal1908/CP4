@@ -8,6 +8,9 @@ using std::vector;
 void VoteHeap::updateVotes(User* user, size_t votes) {
     user->m_vote_count += votes;
     increaseKey(user->m_heap_index, user);
+    for(int i=0;i<m_heap.size();i++){
+        std::cout << "ID: "<<m_heap[i]->m_user_id<<" Votes: "<<m_heap[i]->m_vote_count<<std::endl;
+    }
 }
 
 void VoteHeap::scoreboard(size_t k) {
@@ -60,7 +63,7 @@ User* VoteHeap::extractMax() {
 void VoteHeap::increaseKey(size_t i, User* key) {
     m_heap[i] = key;
     key->m_heap_index = i;
-    while (i > 0 && m_heap[(i - 1) / 2] < m_heap[i]) {
+    while (i > 0 && m_heap[(i - 1) / 2]->m_vote_count < m_heap[i]->m_vote_count) {
         std::swap(m_heap[i], m_heap[(i - 1) / 2]);
         std::swap(m_heap[i]->m_heap_index, m_heap[(i - 1)/2]->m_heap_index);
         i = (i - 1) / 2;

@@ -22,7 +22,9 @@ class UserTree {
 public:
     User* insert(User* user);
     User* find(const string& user_id);
-    User* remove(User* user);
+    void remove(User* user);
+    void io();
+    void inorder(UserNode * u);
 
     ~UserTree() {
         delete m_root;
