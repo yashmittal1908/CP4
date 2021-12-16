@@ -6,7 +6,7 @@
 int main(int, char* argv[]) {
     using namespace std;
 
-    size_t flight_cost = 100;//atoi(argv[1]);//stoull(argv[1]);
+    size_t flight_cost = stoull(argv[1]);
     string choice;
     string action;
     UserTree userTree;
@@ -17,7 +17,6 @@ int main(int, char* argv[]) {
     //menu
     do {
         cout << endl;
-        cout << flight_cost << endl;
         cout << "What would you like to do?" << endl;
         cout << "1. Register <userid>" << endl;
         cout << "2. Vote <numofvotes> <userid>" << endl;
@@ -37,6 +36,7 @@ int main(int, char* argv[]) {
                 user = new User{userid};
                 voteHeap.insert(user);
                 userTree.insert(user);
+                cout << "User " << userid << " successfully registered!" << endl;
             }
         } else if (action == "vote") {
             size_t votes;
@@ -55,7 +55,6 @@ int main(int, char* argv[]) {
                     const string& launchUserID = toLaunch->m_user_id;
                     cout << "Launch User Id: " << launchUserID << endl;
                     userTree.remove(toLaunch);
-                    userTree.io();
                 }
             } else {
                 cerr << "This user doesn't exist!" << endl;

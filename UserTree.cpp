@@ -81,17 +81,5 @@ User* UserTree::remove(User* user, UserTree::UserNode*& subtree) {
     }
 }
 
-void UserTree::io(){
-    inorder(m_root);
-}
-void UserTree::inorder(UserNode * u){
-    if(u->m_left != nullptr){
-        inorder(u->m_left);
-    }
-    if(u->m_right != nullptr){
-        inorder(u->m_right);
-    }
-    std::cout << "id: " << u->m_user->m_user_id << std::endl;
-}
 
 

@@ -8,9 +8,6 @@ using std::vector;
 void VoteHeap::updateVotes(User* user, size_t votes) {
     user->m_vote_count += votes;
     increaseKey(user->m_heap_index, user);
-    for(int i=0;i<m_heap.size();i++){
-        std::cout << "ID: "<<m_heap[i]->m_user_id<<" Votes: "<<m_heap[i]->m_vote_count<<std::endl;
-    }
 }
 
 void VoteHeap::scoreboard(size_t k) {
