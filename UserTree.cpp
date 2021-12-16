@@ -68,14 +68,14 @@ User* UserTree::remove(User* user, UserTree::UserNode*& subtree) {
         UserNode* to_delete = subtree;
         User* ret = to_delete->m_user;
         subtree = subtree->m_left;
-        subtree->m_left = nullptr;
+        to_delete->m_left = nullptr;
         delete to_delete;
         return ret;
     } else {
         UserNode* to_delete = subtree;
         User* ret = to_delete->m_user;
         subtree = subtree->m_right;
-        subtree->m_right = nullptr;
+        to_delete->m_right = nullptr;
         delete to_delete;
         return ret;
     }
